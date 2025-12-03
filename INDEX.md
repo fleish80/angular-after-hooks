@@ -85,6 +85,19 @@ Complete guide to all documentation files in this presentation project.
 
 ---
 
+### 7. [LIFECYCLE_HOOKS_AND_RENDERER.md](./LIFECYCLE_HOOKS_AND_RENDERER.md) - ⏱️ 15 min read
+**Understanding lifecycle hooks and renderer**
+- What is "renderer" in Angular?
+- Traditional lifecycle hooks explained
+- Deprecation status and future
+- Migration from old hooks to new APIs
+- Complete comparison table
+- When to use what
+
+👉 **Essential for understanding the evolution from traditional hooks to modern APIs**
+
+---
+
 ## 🎯 Choose Your Path
 
 ### Path 1: Quick Learner (30 minutes)
@@ -129,6 +142,7 @@ Complete guide to all documentation files in this presentation project.
 
 ### Learning the APIs
 - [AFTER_RENDER_APIS.md](./AFTER_RENDER_APIS.md) - Complete guide
+- [LIFECYCLE_HOOKS_AND_RENDERER.md](./LIFECYCLE_HOOKS_AND_RENDERER.md) - Lifecycle hooks & renderer explained
 - [CHEAT_SHEET.md](./CHEAT_SHEET.md) - Quick reference
 
 ### Presenting
@@ -145,6 +159,10 @@ Complete guide to all documentation files in this presentation project.
 
 ### "I want to understand everything"
 → [AFTER_RENDER_APIS.md](./AFTER_RENDER_APIS.md)
+→ [LIFECYCLE_HOOKS_AND_RENDERER.md](./LIFECYCLE_HOOKS_AND_RENDERER.md)
+
+### "I want to understand lifecycle hooks and what renderer means"
+→ [LIFECYCLE_HOOKS_AND_RENDERER.md](./LIFECYCLE_HOOKS_AND_RENDERER.md)
 
 ### "I'm presenting to my team"
 → [PRESENTATION_GUIDE.md](./PRESENTATION_GUIDE.md)
@@ -186,6 +204,7 @@ apps/main-app/src/app/demos/
 | QUICK_START.md | Getting running | Short | First time |
 | CHEAT_SHEET.md | Quick reference | Medium | Daily use |
 | AFTER_RENDER_APIS.md | Deep understanding | Long | Learning |
+| LIFECYCLE_HOOKS_AND_RENDERER.md | Lifecycle hooks & renderer | Long | Understanding context |
 | PRESENTATION_GUIDE.md | Presenting | Medium | Before presenting |
 | README.md | Overview | Medium | Introduction |
 | SUMMARY.md | What's included | Medium | Review |
@@ -197,9 +216,11 @@ By reading all documentation, you'll understand:
 1. ✅ All four "after render" APIs
 2. ✅ When and why to use each
 3. ✅ How to migrate from Angular 19 to 20
-4. ✅ Best practices and common patterns
-5. ✅ Real-world use cases
-6. ✅ How to present this to others
+4. ✅ Traditional lifecycle hooks and their limitations
+5. ✅ What "renderer" means in Angular
+6. ✅ Best practices and common patterns
+7. ✅ Real-world use cases
+8. ✅ How to present this to others
 
 ## 💡 Tips
 

@@ -60,10 +60,18 @@ npx nx build main-app
 - Not tied to render cycle
 - Examples: localStorage sync, logging, API calls
 
+### 5. Lifecycle Hooks Comparison
+- Understanding traditional lifecycle hooks
+- What "renderer" means in Angular
+- Migration from old to new APIs
+- Deprecation status and future
+
 ## 📖 Documentation
 
 - **[AFTER_RENDER_APIS.md](./AFTER_RENDER_APIS.md)** - Complete written guide with code examples
+- **[LIFECYCLE_HOOKS_AND_RENDERER.md](./LIFECYCLE_HOOKS_AND_RENDERER.md)** - Traditional hooks vs. modern APIs
 - **[PRESENTATION_GUIDE.md](./PRESENTATION_GUIDE.md)** - Guide for presenting to your team
+- **[CHEAT_SHEET.md](./CHEAT_SHEET.md)** - Quick reference guide
 - **Interactive App** - Run the app to see live demos with explanations
 
 ## 🎯 Learning Path
@@ -96,20 +104,23 @@ npx nx build main-app
 
 ```
 angular-after-hooks/
-├── AFTER_RENDER_APIS.md          # Detailed written guide
-├── PRESENTATION_GUIDE.md          # Presentation tips
-├── README.md                      # This file
+├── AFTER_RENDER_APIS.md             # Detailed written guide
+├── LIFECYCLE_HOOKS_AND_RENDERER.md  # Lifecycle hooks & renderer explained
+├── PRESENTATION_GUIDE.md            # Presentation tips
+├── CHEAT_SHEET.md                   # Quick reference
+├── README.md                        # This file
 └── apps/
     └── main-app/
         └── src/
             └── app/
                 ├── demos/
-                │   ├── presentation.ts              # Main presentation component
-                │   ├── after-next-render-demo.ts    # afterNextRender examples
-                │   ├── after-every-render-demo.ts   # afterEveryRender examples
-                │   ├── after-render-effect-demo.ts  # afterRenderEffect examples
-                │   └── effect-demo.ts               # effect examples
-                └── app.routes.ts                    # Routing configuration
+                │   ├── presentation.ts                 # Main presentation component
+                │   ├── after-next-render-demo.ts       # afterNextRender examples
+                │   ├── after-every-render-demo.ts      # afterEveryRender examples
+                │   ├── after-render-effect-demo.ts     # afterRenderEffect examples
+                │   ├── effect-demo.ts                  # effect examples
+                │   └── lifecycle-comparison-demo.ts    # Hooks comparison
+                └── app.routes.ts                       # Routing configuration
 ```
 
 ## 🎓 Key Concepts

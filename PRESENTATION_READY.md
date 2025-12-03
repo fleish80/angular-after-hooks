@@ -8,8 +8,8 @@ Everything has been created and tested. Your comprehensive Angular "After Render
 
 ### 🎯 Interactive Demo Application
 A fully working Angular 20/21 application with:
-- ✅ **4 Complete Demo Components** (2,233 lines of code)
-- ✅ **12+ Interactive Examples**
+- ✅ **5 Complete Demo Components** (3,000+ lines of code)
+- ✅ **15+ Interactive Examples**
 - ✅ **Beautiful, Modern UI** with unique gradients for each API
 - ✅ **Real-time Visual Feedback**
 - ✅ **Console Logging** for detailed execution tracking
@@ -114,6 +114,28 @@ That's it! Your presentation will load automatically.
 
 ---
 
+### Lifecycle Hooks Comparison (🔄 Purple)
+**Traditional hooks vs. modern after-render APIs**
+
+**Examples in Demo:**
+- ✅ What "renderer" means in Angular
+- ✅ Render cycle visualization
+- ✅ Problems with traditional hooks
+- ✅ Benefits of new APIs
+- ✅ Migration examples
+- ✅ Deprecation status explained
+- ✅ Complete hooks comparison table
+
+**Use Cases:**
+- Understanding the evolution
+- Migration planning
+- Team education
+- Historical context
+
+**Key Features:** Visual flow of render cycle, side-by-side comparison of old vs. new approaches
+
+---
+
 ## 🎨 Visual Features
 
 Each demo includes:
@@ -163,17 +185,24 @@ Each demo includes:
 - Compare with afterRenderEffect
 - Explain when to use each
 
-**7. Comparison & Decision Tree (5 min)**
+**7. Lifecycle Hooks Comparison (10 min)**
+- Explain what "renderer" means
+- Show traditional hooks limitations
+- Demonstrate migration path
+- Discuss deprecation status
+
+**8. Comparison & Decision Tree (5 min)**
 - Show comparison table
 - Walk through decision tree
 - Best practices
 
-**8. Migration Guide (5 min)**
+**9. Migration Guide (5 min)**
 - Angular 19 → 20 changes
+- Traditional hooks → modern APIs
 - Code examples
 - Migration strategy
 
-**9. Q&A (5-10 min)**
+**10. Q&A (5-10 min)**
 - Answer questions
 - Discuss team use cases
 - Plan next steps
@@ -289,7 +318,8 @@ apps/main-app/src/app/demos/
 ├── after-next-render-demo.ts    # Demo 1
 ├── after-every-render-demo.ts   # Demo 2
 ├── after-render-effect-demo.ts  # Demo 3
-└── effect-demo.ts               # Demo 4
+├── effect-demo.ts               # Demo 4
+└── lifecycle-comparison-demo.ts # Demo 5 (Hooks comparison)
 ```
 
 ## ✨ What Makes This Special

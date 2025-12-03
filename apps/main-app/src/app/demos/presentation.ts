@@ -4,6 +4,7 @@ import { AfterNextRenderDemoComponent } from './after-next-render-demo';
 import { AfterEveryRenderDemoComponent } from './after-every-render-demo';
 import { AfterRenderEffectDemoComponent } from './after-render-effect-demo';
 import { EffectDemoComponent } from './effect-demo';
+import { LifecycleComparisonDemoComponent } from './lifecycle-comparison-demo';
 
 /**
  * Main presentation component that combines all "after render" API demos
@@ -16,7 +17,8 @@ import { EffectDemoComponent } from './effect-demo';
     AfterNextRenderDemoComponent,
     AfterEveryRenderDemoComponent,
     AfterRenderEffectDemoComponent,
-    EffectDemoComponent
+    EffectDemoComponent,
+    LifecycleComparisonDemoComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
@@ -45,6 +47,10 @@ import { EffectDemoComponent } from './effect-demo';
           <a href="#effect" class="nav-link">
             <span class="icon">💫</span>
             <span>effect</span>
+          </a>
+          <a href="#lifecycle-comparison" class="nav-link">
+            <span class="icon">🔄</span>
+            <span>Lifecycle Hooks</span>
           </a>
           <a href="#comparison" class="nav-link">
             <span class="icon">🆚</span>
@@ -127,6 +133,10 @@ import { EffectDemoComponent } from './effect-demo';
 
       <section id="effect" class="demo-section">
         <app-effect-demo />
+      </section>
+
+      <section id="lifecycle-comparison" class="demo-section">
+        <app-lifecycle-comparison-demo />
       </section>
 
       <section id="comparison" class="comparison-section">

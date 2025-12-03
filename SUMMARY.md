@@ -11,10 +11,12 @@ A complete, interactive presentation about Angular 20/21's "after render" lifecy
 - **`AfterEveryRenderDemoComponent`** - Shows continuous render synchronization
 - **`AfterRenderEffectDemoComponent`** - Reactive DOM updates with signals
 - **`EffectDemoComponent`** - General signal effects for comparison
+- **`LifecycleComparisonDemoComponent`** - Traditional hooks vs. modern APIs comparison
 - **`PresentationComponent`** - Main presentation with all demos
 
 ### 2. Documentation Files
 - **`AFTER_RENDER_APIS.md`** - Comprehensive written guide (3000+ words)
+- **`LIFECYCLE_HOOKS_AND_RENDERER.md`** - Lifecycle hooks & renderer explained (4000+ words)
 - **`PRESENTATION_GUIDE.md`** - Tips for presenting to your team
 - **`CHEAT_SHEET.md`** - Quick reference for developers
 - **`README.md`** - Project overview and quick start
@@ -88,7 +90,8 @@ angular-after-hooks/
                 │   ├── after-next-render-demo.ts    # Demo 1
                 │   ├── after-every-render-demo.ts   # Demo 2
                 │   ├── after-render-effect-demo.ts  # Demo 3
-                │   └── effect-demo.ts               # Demo 4
+                │   ├── effect-demo.ts               # Demo 4
+                │   └── lifecycle-comparison-demo.ts # Demo 5
                 ├── app.routes.ts                    # Routing
                 ├── app.ts                           # Root component
                 ├── app.html                         # Root template
