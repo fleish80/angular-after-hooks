@@ -9,7 +9,6 @@ import { ChangeDetectionStrategy } from '@angular/core';
  */
 @Component({
   selector: 'app-after-every-render-demo',
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="demo-card">
@@ -40,9 +39,9 @@ import { ChangeDetectionStrategy } from '@angular/core';
       </div>
 
       <div class="example-section">
-        <h3>Example: Render Counter</h3>
+        <h3>Example 1: Render Counter</h3>
         <p>Tracks how many times the component has rendered:</p>
-        
+
         <div class="counter-display">
           <div class="big-number">{{ renderCount() }}</div>
           <div class="label">Total Renders</div>
@@ -51,17 +50,18 @@ import { ChangeDetectionStrategy } from '@angular/core';
         <button (click)="increment()" class="demo-button">
           Trigger Re-render (Count: {{ count() }})
         </button>
-        
+
         <p class="hint">
-          💡 Click the button to trigger a re-render. 
+          💡 Click the button to trigger a re-render.
           The counter above tracks every render via afterEveryRender.
         </p>
+        <pre class="inline-code"><code>{{ codeCounter }}</code></pre>
       </div>
 
       <div class="example-section">
-        <h3>Example: Analytics Tracking</h3>
+        <h3>Example 2: Analytics Tracking</h3>
         <p>Simulate sending analytics on every render:</p>
-        
+
         <div class="analytics-log">
           @for (log of analyticsLogs(); track $index) {
             <div class="log-entry" [class.latest]="$index === analyticsLogs().length - 1">
@@ -69,20 +69,16 @@ import { ChangeDetectionStrategy } from '@angular/core';
             </div>
           }
         </div>
+        <pre class="inline-code"><code>{{ codeAnalytics }}</code></pre>
       </div>
 
       <div class="warning-box">
         <h3>⚠️ Performance Warning</h3>
         <p>
           <code>afterEveryRender</code> runs frequently! Use it only when you need
-          to synchronize with every render cycle. For one-time setup, use 
+          to synchronize with every render cycle. For one-time setup, use
           <code>afterNextRender</code> instead.
         </p>
-      </div>
-
-      <div class="code-section">
-        <h3>Code Example:</h3>
-        <pre><code>{{ codeExample }}</code></pre>
       </div>
     </div>
   `,
@@ -276,27 +272,24 @@ import { ChangeDetectionStrategy } from '@angular/core';
       color: #ffd700;
     }
 
-    .code-section {
-      background: rgba(0, 0, 0, 0.3);
-      padding: 1.5rem;
+    .inline-code {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 1rem;
       border-radius: 8px;
-      margin-top: 2rem;
+      margin: 1rem 0 0;
+      overflow-x: auto;
     }
 
-    .code-section h3 {
-      margin-top: 0;
-      color: #ffd700;
+    .inline-code code {
+      background: none;
+      font-size: 0.85rem;
+      line-height: 1.55;
+      color: #e0e0e0;
     }
 
     pre {
       margin: 0;
       overflow-x: auto;
-    }
-
-    .code-section code {
-      font-size: 0.9rem;
-      line-height: 1.6;
-      color: #e0e0e0;
     }
   `]
 })
@@ -309,48 +302,45 @@ export class AfterEveryRenderDemoComponent {
   // Computed value (triggers re-render when count changes)
   doubledCount = computed(() => this.count() * 2);
 
-  codeExample = `constructor() {
-  // Runs after EVERY render
+  codeCounter = `count = signal(0);
+renderCount = signal(0);
+
+constructor() {
   afterEveryRender(() => {
-    // Increment render counter
-    this.renderCount.update(c => c + 1);
-    
-    // Send analytics (simulated)
-    const timestamp = new Date().toLocaleTimeString();
-    console.log('📊 Render completed at', timestamp);
+    this.renderCount.update((c) => c + 1);
   });
 }
 
-// Trigger re-render
-increment() {
-  this.count.update(c => c + 1); // Causes re-render
+increment(): void {
+  this.count.update((c) => c + 1); // triggers a re-render
+}`;
+
+  codeAnalytics = `analyticsLogs = signal<string[]>([]);
+
+constructor() {
+  afterEveryRender(() => {
+    const timestamp = new Date().toLocaleTimeString();
+    const log = \`[\${timestamp}] render #\${this.renderCount()}\`;
+    this.analyticsLogs.update((logs) => [...logs, log].slice(-10));
+  });
 }`;
 
   constructor() {
-    // This runs EVERY time after rendering
+    // Example 1: bump the render counter every render
     afterEveryRender(() => {
-      // Increment the render counter
-      this.renderCount.update(count => count + 1);
-      
-      // Simulate analytics tracking
-      const timestamp = new Date().toLocaleTimeString();
-      const log = `[🔄 ${timestamp}] Render #${this.renderCount()} - Count: ${this.count()}`;
-      
-      this.analyticsLogs.update(logs => {
-        const newLogs = [...logs, log];
-        // Keep only last 10 logs
-        return newLogs.slice(-10);
-      });
-      
-      console.log('🔄 afterEveryRender executed:', log);
+      this.renderCount.update((c) => c + 1);
     });
 
-    console.log('🔄 AfterEveryRenderDemo: constructor called');
+    // Example 2: simulate analytics tracking every render
+    afterEveryRender(() => {
+      const timestamp = new Date().toLocaleTimeString();
+      const log = `[${timestamp}] render #${this.renderCount()}`;
+      this.analyticsLogs.update((logs) => [...logs, log].slice(-10));
+    });
   }
 
   increment(): void {
-    this.count.update(c => c + 1);
-    console.log('👆 Button clicked, count:', this.count());
+    this.count.update((c) => c + 1); // triggers a re-render
   }
 }
 

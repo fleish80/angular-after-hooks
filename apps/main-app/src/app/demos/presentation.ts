@@ -5,6 +5,7 @@ import { AfterEveryRenderDemoComponent } from './after-every-render-demo';
 import { AfterRenderEffectDemoComponent } from './after-render-effect-demo';
 import { EffectDemoComponent } from './effect-demo';
 import { LifecycleComparisonDemoComponent } from './lifecycle-comparison-demo';
+import { PhasesAndOptionsDemoComponent } from './phases-and-options-demo';
 
 /**
  * Main presentation component that combines all "after render" API demos
@@ -12,21 +13,21 @@ import { LifecycleComparisonDemoComponent } from './lifecycle-comparison-demo';
  */
 @Component({
   selector: 'app-presentation',
-  standalone: true,
   imports: [
     AfterNextRenderDemoComponent,
     AfterEveryRenderDemoComponent,
     AfterRenderEffectDemoComponent,
     EffectDemoComponent,
-    LifecycleComparisonDemoComponent
+    LifecycleComparisonDemoComponent,
+    PhasesAndOptionsDemoComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="presentation-container">
       <header class="presentation-header">
         <h1>⚡ Angular "After Render" APIs</h1>
-        <p class="subtitle">Complete Guide to Angular 20+ Render Lifecycle Hooks</p>
-        <div class="version-badge">Angular 20+ / 21</div>
+        <p class="subtitle">Complete Guide to Angular's Render Lifecycle Hooks</p>
+        <div class="version-badge">Angular 21 — current stable</div>
       </header>
 
       <nav class="quick-nav">
@@ -43,6 +44,10 @@ import { LifecycleComparisonDemoComponent } from './lifecycle-comparison-demo';
           <a href="#after-render-effect" class="nav-link">
             <span class="icon">⚡</span>
             <span>afterRenderEffect</span>
+          </a>
+          <a href="#phases-and-options" class="nav-link">
+            <span class="icon">🧩</span>
+            <span>Phases &amp; Options</span>
           </a>
           <a href="#effect" class="nav-link">
             <span class="icon">💫</span>
@@ -74,13 +79,24 @@ import { LifecycleComparisonDemoComponent } from './lifecycle-comparison-demo';
           </div>
           <div class="intro-card">
             <h3>⚡ afterRenderEffect</h3>
-            <p>Reactive effect that runs after render</p>
-            <span class="status new">New in v19/20</span>
+            <p>
+              Reactive effect that runs after render. <strong>Angular 21</strong> added a
+              phase spec — values flow between phases as signals.
+            </p>
+            <span class="status new">Phase spec new in v21</span>
           </div>
           <div class="intro-card">
             <h3>💫 effect</h3>
             <p>General signal effect (not render-specific)</p>
             <span class="status stable">Stable in v20+</span>
+          </div>
+          <div class="intro-card">
+            <h3>🧩 Phases &amp; Options</h3>
+            <p>
+              The four render phases — <code>earlyRead</code>, <code>write</code>,
+              <code>mixedReadWrite</code>, <code>read</code> — plus the <code>injector</code> option.
+            </p>
+            <span class="status new">Full API surface</span>
           </div>
         </div>
       </section>
@@ -129,6 +145,10 @@ import { LifecycleComparisonDemoComponent } from './lifecycle-comparison-demo';
 
       <section id="after-render-effect" class="demo-section">
         <app-after-render-effect-demo />
+      </section>
+
+      <section id="phases-and-options" class="demo-section">
+        <app-phases-and-options-demo />
       </section>
 
       <section id="effect" class="demo-section">
@@ -228,7 +248,7 @@ import { LifecycleComparisonDemoComponent } from './lifecycle-comparison-demo';
           <div class="migration-example">
             <div class="migration-before">
               <h4>❌ Angular 19 (Old)</h4>
-              <pre><code>import &#123; afterRender &#125; from '@angular/core';
+              <pre><code>import &#123; afterRender &#125; from '&#64;angular/core';
 
 afterRender(() => &#123;
   // ...
@@ -237,7 +257,7 @@ afterRender(() => &#123;
             <div class="migration-arrow">→</div>
             <div class="migration-after">
               <h4>✅ Angular 20+ (New)</h4>
-              <pre><code>import &#123; afterEveryRender &#125; from '@angular/core';
+              <pre><code>import &#123; afterEveryRender &#125; from '&#64;angular/core';
 
 afterEveryRender(() => &#123;
   // ...

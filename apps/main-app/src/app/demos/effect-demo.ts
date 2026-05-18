@@ -9,7 +9,6 @@ import { ChangeDetectionStrategy } from '@angular/core';
  */
 @Component({
   selector: 'app-effect-demo',
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="demo-card">
@@ -63,28 +62,29 @@ import { ChangeDetectionStrategy } from '@angular/core';
       <div class="example-section">
         <h3>Example 1: LocalStorage Sync</h3>
         <p>Automatically saves to localStorage when value changes:</p>
-        
-        <input 
-          type="text" 
-          [value]="username()" 
+
+        <input
+          type="text"
+          [value]="username()"
           (input)="updateUsername($event)"
           placeholder="Enter your name..."
           class="demo-input"
         />
-        
+
         <p class="result">
           💾 Saved to localStorage: <strong>{{ username() || '(empty)' }}</strong>
         </p>
-        
+
         <button (click)="clearUsername()" class="demo-button secondary">
           Clear
         </button>
+        <pre class="inline-code"><code>{{ codeStorage }}</code></pre>
       </div>
 
       <div class="example-section">
         <h3>Example 2: Analytics Logging</h3>
         <p>Logs all state changes automatically:</p>
-        
+
         <div class="counter-controls">
           <button (click)="increment()" class="demo-button">
             Increment ({{ counter() }})
@@ -93,7 +93,7 @@ import { ChangeDetectionStrategy } from '@angular/core';
             Decrement
           </button>
         </div>
-        
+
         <div class="analytics-panel">
           <h4>📊 Analytics Log:</h4>
           <div class="log-container">
@@ -104,12 +104,13 @@ import { ChangeDetectionStrategy } from '@angular/core';
             }
           </div>
         </div>
+        <pre class="inline-code"><code>{{ codeAnalytics }}</code></pre>
       </div>
 
       <div class="example-section">
         <h3>Example 3: Computed Value with Effect</h3>
         <p>Effect reacts to computed signals:</p>
-        
+
         <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-value">{{ counter() }}</div>
@@ -124,10 +125,11 @@ import { ChangeDetectionStrategy } from '@angular/core';
             <div class="stat-label">Squared (computed)</div>
           </div>
         </div>
-        
+
         <p class="hint">
           💡 The effect below logs all computed values automatically
         </p>
+        <pre class="inline-code"><code>{{ codeComputed }}</code></pre>
       </div>
 
       <div class="lifecycle-box">
@@ -138,10 +140,6 @@ import { ChangeDetectionStrategy } from '@angular/core';
         </div>
       </div>
 
-      <div class="code-section">
-        <h3>Code Example:</h3>
-        <pre><code>{{ codeExample }}</code></pre>
-      </div>
     </div>
   `,
   styles: [`
@@ -361,17 +359,12 @@ import { ChangeDetectionStrategy } from '@angular/core';
       font-size: 1rem;
     }
 
-    .code-section {
-      background: rgba(0, 0, 0, 0.8);
-      padding: 1.5rem;
+    .inline-code {
+      background: rgba(0, 0, 0, 0.85);
+      padding: 1rem;
       border-radius: 8px;
-      margin-top: 2rem;
-      color: white;
-    }
-
-    .code-section h3 {
-      margin-top: 0;
-      color: #ffd700;
+      margin: 1rem 0 0;
+      overflow-x: auto;
     }
 
     pre {
@@ -381,15 +374,15 @@ import { ChangeDetectionStrategy } from '@angular/core';
 
     code {
       font-family: 'Courier New', monospace;
-      font-size: 0.9rem;
-      line-height: 1.6;
+      font-size: 0.85rem;
+      line-height: 1.55;
       color: #e0e0e0;
     }
   `]
 })
 export class EffectDemoComponent {
   // State
-  username = signal('');
+  username = signal(localStorage.getItem('username') ?? '');
   counter = signal(0);
   analyticsLog = signal<string[]>([]);
   effectRunCount = signal(0);
@@ -399,8 +392,10 @@ export class EffectDemoComponent {
   doubled = computed(() => this.counter() * 2);
   squared = computed(() => this.counter() ** 2);
 
-  codeExample = `constructor() {
-  // Example 1: LocalStorage sync
+  codeStorage = `username = signal(localStorage.getItem('username') ?? '');
+
+constructor() {
+  // Re-runs whenever username() changes:
   effect(() => {
     const name = this.username();
     if (name) {
@@ -409,70 +404,68 @@ export class EffectDemoComponent {
       localStorage.removeItem('username');
     }
   });
+}`;
 
-  // Example 2: Analytics logging
+  codeAnalytics = `counter      = signal(0);
+analyticsLog = signal<string[]>([]);
+
+constructor() {
   effect(() => {
     const count = this.counter();
-    console.log('📊 Counter changed:', count);
-    // Send to analytics service...
+    const timestamp = new Date().toLocaleTimeString();
+    const entry = \`[\${timestamp}] counter=\${count} doubled=\${this.doubled()} squared=\${this.squared()}\`;
+    this.analyticsLog.update((logs) => [...logs, entry].slice(-10));
+    // In real code: send to analytics service
   });
+}`;
 
-  // Example 3: Computed values
+  codeComputed = `counter = signal(0);
+doubled = computed(() => this.counter() * 2);
+squared = computed(() => this.counter() ** 2);
+
+effectRunCount = signal(0);
+lastEffectRun  = signal('Not yet run');
+
+constructor() {
+  // Effects can track computed signals — Angular handles the
+  // dependency graph automatically.
   effect(() => {
-    console.log('Values:', {
-      counter: this.counter(),
-      doubled: this.doubled(),
-      squared: this.squared()
-    });
+    // Reading both signals registers them as dependencies:
+    void this.counter();
+    void this.username();
+    this.effectRunCount.update((c) => c + 1);
+    this.lastEffectRun.set(new Date().toLocaleTimeString());
   });
 }`;
 
   constructor() {
-    // Load initial username from localStorage
-    const saved = localStorage.getItem('username');
-    if (saved) {
-      this.username.set(saved);
-    }
+    // Load initial value (the field initializer above used localStorage)
 
     // Example 1: Sync username to localStorage
     effect(() => {
       const name = this.username();
       if (name) {
         localStorage.setItem('username', name);
-        console.log('💾 Saved to localStorage:', name);
       } else {
         localStorage.removeItem('username');
-        console.log('💾 Removed from localStorage');
       }
     });
 
-    // Example 2: Analytics logging for counter
+    // Example 2: Analytics logging for counter + computed values
     effect(() => {
       const count = this.counter();
       const timestamp = new Date().toLocaleTimeString();
-      const log = `[💫 ${timestamp}] Counter: ${count}, Doubled: ${this.doubled()}, Squared: ${this.squared()}`;
-      
-      this.analyticsLog.update(logs => {
-        const newLogs = [...logs, log];
-        return newLogs.slice(-10); // Keep last 10
-      });
-      
-      console.log('📊 Analytics:', log);
+      const entry = `[${timestamp}] counter=${count} doubled=${this.doubled()} squared=${this.squared()}`;
+      this.analyticsLog.update((logs) => [...logs, entry].slice(-10));
     });
 
     // Example 3: Track effect lifecycle
     effect(() => {
-      // Track any signal to demonstrate effect runs
-      const _ = this.counter();
-      const __ = this.username();
-      
-      this.effectRunCount.update(c => c + 1);
+      void this.counter();
+      void this.username();
+      this.effectRunCount.update((c) => c + 1);
       this.lastEffectRun.set(new Date().toLocaleTimeString());
-      
-      console.log('💫 Effect run count:', this.effectRunCount());
     });
-
-    console.log('💫 EffectDemo: constructor called');
   }
 
   updateUsername(event: Event): void {
@@ -485,11 +478,11 @@ export class EffectDemoComponent {
   }
 
   increment(): void {
-    this.counter.update(c => c + 1);
+    this.counter.update((c) => c + 1);
   }
 
   decrement(): void {
-    this.counter.update(c => c - 1);
+    this.counter.update((c) => c - 1);
   }
 }
 

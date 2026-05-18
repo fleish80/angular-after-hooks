@@ -436,6 +436,10 @@ import { Component, ElementRef, viewChild, signal, afterNextRender, afterEveryRe
       margin: 1rem 0;
     }
 
+    pre code {
+      color: #e0e0e0;
+    }
+
     code {
       font-family: 'Courier New', monospace;
       font-size: 0.85rem;
